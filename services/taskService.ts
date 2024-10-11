@@ -8,7 +8,7 @@ export async function fetchTasks() {
   return await response.json();
 }
 
-export async function fetchTaskById(id: number) {
+export async function fetchTaskById(id: string) {
   const response = await fetch(`${API_URL}/tasks/${id}`);
   return await response.json();
 }
@@ -25,7 +25,7 @@ export async function createTask(task: { title: string; description: string }) {
 }
 
 export async function updateTask(task: {
-  id: number;
+  id: string;
   title: string;
   description: string;
 }) {
@@ -39,7 +39,7 @@ export async function updateTask(task: {
   return await response.json();
 }
 
-export async function deleteTask(id: number) {
+export async function deleteTask(id: string) {
   await fetch(`${API_URL}/tasks/${id}`, {
     method: "DELETE",
   });

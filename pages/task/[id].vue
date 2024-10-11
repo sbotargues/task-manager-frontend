@@ -15,7 +15,7 @@ import { useTaskStore } from "@/store/taskStore";
 import { useRoute } from "vue-router";
 
 interface Task {
-  id: number;
+  id: string;
   title: string;
   description: string;
 }

@@ -3,7 +3,7 @@
     <div class="flex flex-col">
       <label for="title" class="mb-2 font-semibold">Título</label>
       <input
-        v-model="task.title"
+        v-model="taskData.title"
         id="title"
         required
         class="border p-2 rounded-md"
@@ -13,7 +13,7 @@
     <div class="flex flex-col">
       <label for="description" class="mb-2 font-semibold">Descripción</label>
       <textarea
-        v-model="task.description"
+        v-model="taskData.description"
         id="description"
         required
         class="border p-2 rounded-md"
@@ -30,35 +30,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import { useTaskStore } from "@/store/taskStore";
 
 interface Task {
-  id?: number;
+  id?: string;
   title: string;
   description: string;
 }
 
 export default defineComponent({
-  setup() {
-    const task = ref<Task>({ title: "", description: "" });
+  props: {
+    task: {
+      type: Object as () => Task,
+      default: () => ({ title: "", description: "" }),
+    },
+  },
+  setup(props) {
+    const router = useRouter();
+    const taskData = ref<Task>({ ...props.task });
     const taskStore = useTaskStore();
 
-    const submitForm = () => {
+    watch(
+      () => props.task,
+      (newTask) => {
+        taskData.value = { ...newTask };
+      }
+    );
+
+    const submitForm = async () => {
       const currentTask = {
-        ...task.value,
-        id: task.value.id ?? 0,
+        ...taskData.value,
+        id: taskData.value.id ?? "",
       };
 
-      if (task.value.id) {
-        taskStore.updateTask(currentTask);
+      if (taskData.value.id) {
+        await taskStore.updateTask(currentTask);
       } else {
-        taskStore.createTask(currentTask);
+        await taskStore.createTask(currentTask);
       }
+
+      router.push("/");
     };
 
     return {
-      task,
+      taskData,
       submitForm,
     };
   },

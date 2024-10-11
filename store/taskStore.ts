@@ -1,8 +1,7 @@
-// store/taskStore.ts
 import { defineStore } from "pinia";
 
 interface Task {
-  id: number;
+  id: string;
   title: string;
   description: string;
 }
@@ -45,7 +44,7 @@ export const useTaskStore = defineStore("taskStore", {
       });
       this.fetchTasks();
     },
-    async deleteTask(id: number) {
+    async deleteTask(id: string) {
       const config = useRuntimeConfig();
       await fetch(`${config.public.apiUrl}/tasks/${id}`, {
         method: "DELETE",

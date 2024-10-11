@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Header o menú de navegación -->
     <header
       class="bg-gray-800 p-4 text-white flex justify-between items-center"
     >
@@ -17,21 +16,17 @@
       </nav>
     </header>
 
-    <!-- Contenido principal -->
     <main class="p-8">
       <Nuxt />
     </main>
 
-    <!-- Footer opcional -->
     <footer class="bg-gray-800 p-4 text-white mt-8 text-center">
       <p>&copy; 2024 Task Manager App</p>
     </footer>
   </div>
 </template>
 
-<script setup lang="ts">
-// No necesitas nada específico aquí por ahora, ya que solo estamos definiendo el layout base
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 header nav ul li a {

@@ -47,11 +47,11 @@ const viewTask = (id: string) => {
   router.push(`/task/${id}`);
 };
 
-const editTask = (task: { id: number }) => {
+const editTask = (task: { id: string }) => {
   router.push(`/task/${task.id}`);
 };
 
-const deleteTask = (id: number) => {
+const deleteTask = (id: string) => {
   taskStore.deleteTask(id);
 };
 </script>
