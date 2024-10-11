@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#app": ["./.nuxt/types/app"],
+      "#build": ["./.nuxt/types/build"],
+      "#imports": ["./.nuxt/types/imports"],
+      "#components": ["./.nuxt/types/components"],
+      "#nitro": ["./.nuxt/types/nitro"],
+      "@/*": ["./*"]
+    },
+    "types": ["@nuxt/types", "@types/node"],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", ".nuxt", "dist"]
+}
