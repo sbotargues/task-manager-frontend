@@ -37,7 +37,7 @@ yarn install
 
 ## Development Server
 
-El proyecto se ejecutará en `http://localhost:8000`:
+El proyecto se ejecutará en `http://localhost:3000`:
 
 ```bash
 # yarn
