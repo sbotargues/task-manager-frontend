@@ -48,7 +48,7 @@ yarn dev
 
 1. **Crear una nueva tarea**:
 
-   - Visita la página `/create` para agregar una nueva tarea.
+   - Visita la página `/` para agregar una nueva tarea.
    - Completa el formulario con los campos de **Título** y **Descripción**.
    - Haz clic en el botón **Guardar** para enviar la tarea al backend.
 
