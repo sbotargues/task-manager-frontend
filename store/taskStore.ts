@@ -1,4 +1,11 @@
 import { defineStore } from "pinia";
+import {
+  fetchTasks,
+  fetchTaskById,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../services/taskService";
 
 interface Task {
   id: string;
@@ -13,42 +20,21 @@ export const useTaskStore = defineStore("taskStore", {
   }),
   actions: {
     async fetchTasks() {
-      const config = useRuntimeConfig();
-      const response = await fetch(`${config.public.apiUrl}/tasks`);
-      this.tasks = await response.json();
+      this.tasks = await fetchTasks();
     },
     async fetchTaskById(id: string) {
-      const config = useRuntimeConfig();
-      const response = await fetch(`${config.public.apiUrl}/tasks/${id}`);
-      this.task = await response.json();
+      this.task = await fetchTaskById(id);
     },
     async createTask(task: Task) {
-      const config = useRuntimeConfig();
-      await fetch(`${config.public.apiUrl}/tasks`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(task),
-      });
+      await createTask(task);
       this.fetchTasks();
     },
     async updateTask(task: Task) {
-      const config = useRuntimeConfig();
-      await fetch(`${config.public.apiUrl}/tasks/${task.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(task),
-      });
+      await updateTask(task);
       this.fetchTasks();
     },
     async deleteTask(id: string) {
-      const config = useRuntimeConfig();
-      await fetch(`${config.public.apiUrl}/tasks/${id}`, {
-        method: "DELETE",
-      });
+      await deleteTask(id);
       this.fetchTasks();
     },
   },
