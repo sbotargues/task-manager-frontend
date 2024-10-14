@@ -1,11 +1,6 @@
 import { defineStore } from "pinia";
-import {
-  fetchTasks,
-  fetchTaskById,
-  createTask,
-  updateTask,
-  deleteTask,
-} from "../services/taskService";
+import { createTaskService } from "../services/taskService";
+import { useRuntimeConfig } from "#imports";
 
 interface Task {
   id: string;
@@ -17,24 +12,40 @@ export const useTaskStore = defineStore("taskStore", {
   state: () => ({
     tasks: [] as Task[],
     task: null as Task | null,
+    taskService: null as ReturnType<typeof createTaskService> | null,
   }),
   actions: {
+    init() {
+      // Inicializa config y el servicio una sola vez
+      const config = useRuntimeConfig();
+      this.taskService = createTaskService(config);
+    },
+
     async fetchTasks() {
-      this.tasks = await fetchTasks();
+      if (!this.taskService) this.init();
+      this.tasks = await this.taskService!.fetchTasks();
     },
+
     async fetchTaskById(id: string) {
-      this.task = await fetchTaskById(id);
+      if (!this.taskService) this.init();
+      this.task = await this.taskService!.fetchTaskById(id);
     },
+
     async createTask(task: Task) {
-      await createTask(task);
+      if (!this.taskService) this.init();
+      await this.taskService!.createTask(task);
       this.fetchTasks();
     },
+
     async updateTask(task: Task) {
-      await updateTask(task);
+      if (!this.taskService) this.init();
+      await this.taskService!.updateTask(task);
       this.fetchTasks();
     },
+
     async deleteTask(id: string) {
-      await deleteTask(id);
+      if (!this.taskService) this.init();
+      await this.taskService!.deleteTask(id);
       this.fetchTasks();
     },
   },
