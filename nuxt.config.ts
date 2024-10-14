@@ -3,6 +3,7 @@ import federation from "@originjs/vite-plugin-federation";
 export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
   css: ["~/assets/css/tailwind.css"],
+  ssr: false,
 
   runtimeConfig: {
     public: {
@@ -11,14 +12,16 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    build: {
+      target: "esnext",
+    },
     plugins: [
       federation({
         name: "taskManagerFrontend",
         filename: "remoteEntry.js",
         exposes: {
-          "./TaskApp": "./pages/index.vue",
+          "./TaskApp": "./app.vue",
         },
-        shared: ["vue", "pinia"],
       }),
     ],
   },
@@ -31,4 +34,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: "2024-10-14",
 });
