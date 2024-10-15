@@ -14,7 +14,7 @@
     "nuxt": "^3.13.2",
     "pinia": "^2.2.4",
     "vue": "^3.5.12",
-    "vue-router": "latest",
+    "vue-router": "4.4.5",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -23,7 +23,6 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.6.3",
-    "vite-plugin-federation": "^0.0.1"
+    "typescript": "^5.6.3"
   }
 }

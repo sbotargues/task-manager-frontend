@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { createTaskService } from "../services/taskService";
-import { useRuntimeConfig } from "#imports";
+import { useRuntimeConfig } from "nuxt/app";
 
 interface Task {
   id: string;

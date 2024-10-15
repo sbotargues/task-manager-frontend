@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent="submitForm" class="space-y-4">
+  <form
+    v-if="taskData && taskData.title !== undefined"
+    @submit.prevent="submitForm"
+    class="space-y-4"
+  >
     <div class="flex flex-col">
       <label for="title" class="mb-2 font-semibold">Título</label>
       <input
@@ -27,10 +31,13 @@
       Guardar
     </button>
   </form>
+  <div v-else>
+    <p>Cargando los datos de la tarea...</p>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useTaskStore } from "@/store/taskStore";
 
@@ -49,29 +56,40 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter();
-    const taskData = ref<Task>({ ...props.task });
+    const taskData = ref<Task | null>(null);
     const taskStore = useTaskStore();
+
+    onMounted(() => {
+      taskData.value = { ...props.task };
+    });
 
     watch(
       () => props.task,
       (newTask) => {
         taskData.value = { ...newTask };
-      }
+      },
+      { immediate: true }
     );
 
     const submitForm = async () => {
+      if (!taskData.value) return;
+
       const currentTask = {
         ...taskData.value,
         id: taskData.value.id ?? "",
       };
 
-      if (taskData.value.id) {
-        await taskStore.updateTask(currentTask);
-      } else {
-        await taskStore.createTask(currentTask);
-      }
+      try {
+        if (currentTask.id) {
+          await taskStore.updateTask(currentTask);
+        } else {
+          await taskStore.createTask(currentTask);
+        }
 
-      router.push("/");
+        router.push("/");
+      } catch (error) {
+        console.error("Error al guardar la tarea", error);
+      }
     };
 
     return {
